@@ -7,6 +7,9 @@ import { employeerouter } from './employee.route';
 dotenv.config();
 
 const {ATLAS_URI} = process.env;
+const {BASE_URL} = process.env;
+const {PORT} = process.env;
+
 
 //error Handling
 if(!ATLAS_URI){
@@ -20,9 +23,9 @@ connectToDB(ATLAS_URI)
     app.use(cors());
 
     app.use("/employees", employeerouter)
-    app.listen(8000, ()=>{
+    app.listen(PORT, ()=>{
         console.log(`Successfully connected to MongoDB Atlas`);
-        console.log(`Server running at http://localhost:8000`);
+        console.log(`Server running at ${BASE_URL}`);
     })
 
     app.get('/' ,(req,res)=>{
