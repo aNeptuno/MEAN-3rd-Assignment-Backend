@@ -1,19 +1,19 @@
 import * as mongodb from 'mongodb';
-import { Employee} from './employee';
+import { User } from './user';
 
 export const collections: {
-    employees?: mongodb.Collection<Employee>;
+    users?: mongodb.Collection<User>;
 } = {}
 
 export async function connectToDB(uri: string) {
     const client = new mongodb.MongoClient(uri);
     await client.connect();
 
-    const db = client.db("employees");
+    const db = client.db("users");
     await applySchemaValidation(db);
 
-    const employeesConnection = db.collection<Employee>('employees');
-    collections.employees = employeesConnection;
+    const usersConnection = db.collection<User>('users');
+    collections.users = usersConnection;
 }
 
 async function applySchemaValidation(db: mongodb.Db) {
@@ -28,27 +28,27 @@ async function applySchemaValidation(db: mongodb.Db) {
                     bsonType: "string",
                     description:"'name' is required and is a string"
                 },
-                position : {
+                email : {
                     bsonType: "string",
-                    description:"'position' is required and is a string",
+                    description:"'email' is required and is a string",
                     minLength: 5
                 },
                 enum : {
                     bsonType: "string",
-                    description:"'level' is required and is a one of 'junior', 'mid' or 'senior'",
-                    enum: ["junior","mid","senior"]
+                    description:"'genre' is required and is a one of 'woman', 'men' or 'other'",
+                    enum: ["woman","men","other"]
                 }
             }
         }
     };
 
     await db.command({
-        collMod: 'employees',
+        collMod: 'users',
         validator: jsonSchema
     })
     .catch(async (error: mongodb.MongoServerError)=>{
         if(error.codeName === 'NamespaceNotFound'){
-            await db.createCollection('employees', {validator:jsonSchema})
+            await db.createCollection('users', {validator:jsonSchema})
         }
     })
 }

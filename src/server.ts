@@ -2,7 +2,7 @@ import * as dotenv from 'dotenv';
 import cors from 'cors';
 import express from 'express';
 import { connectToDB } from './database';
-import { employeerouter } from './employee.route';
+import { userrouter } from './user.route';
 
 dotenv.config();
 
@@ -22,7 +22,7 @@ connectToDB(ATLAS_URI)
     const app = express();
     app.use(cors());
 
-    app.use("/employees", employeerouter)
+    app.use("/users", userrouter)
     app.listen(PORT, ()=>{
         console.log(`Successfully connected to MongoDB Atlas`);
         console.log(`Server running at ${BASE_URL}`);
