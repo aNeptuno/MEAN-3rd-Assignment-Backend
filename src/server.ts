@@ -28,7 +28,7 @@ connectToDB(ATLAS_URI)
         console.log(`Server running at ${BASE_URL}`);
     })
 
-    app.get('/' ,(req,res)=>{
+    app.get('/' ,(req: any,res: { send: (arg0: string) => void; })=>{
         res.send('App is working (:')
     })
 })

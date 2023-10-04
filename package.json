@@ -4,7 +4,6 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "build": "npm i cors dotenv express mongodb --save && npm i @types/cors @types/express @types/node ts-node typescript --dev ",
     "test": "echo \"Error: no test specified\" && exit 1",
     "serve": "npx ts-node src/server.ts"
   },
